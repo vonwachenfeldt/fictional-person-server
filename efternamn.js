@@ -1,4 +1,4 @@
-{ 
+module.exports = { 
     "efternamn": [
         "Nilsson",
         "Fransson",
