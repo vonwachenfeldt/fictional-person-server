@@ -1,4 +1,4 @@
-{
+module.exports = {
     "kommuner": [
         "Skurups kommun",
         "Strängnäs kommun",

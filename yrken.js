@@ -1,4 +1,4 @@
-{
+module.exports = {
     "yrken": [
         "3D-artist",
         "A-kassehandläggare",

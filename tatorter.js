@@ -1,4 +1,4 @@
-{ 
+module.exports = { 
     "tätorter": [
         "Abbekås",
         "Abborrberget",
