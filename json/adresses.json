@@ -1,5 +1,5 @@
 {
-    "substantiv": [
+    "nouns": [
         "Lingon",
         "Tranbärs",
         "By",
@@ -87,7 +87,7 @@
         "Bäck",
         "Å"
     ],
-    "ändelser": [
+    "endings": [
         "Vägen",
         "Gatan",
         "Leden",
@@ -102,7 +102,7 @@
         "Gläntan",
         "Ängen"
     ],
-    "väderstreck": [
+    "directions": [
         "Norra",
         "Östra",
         "Västra",
