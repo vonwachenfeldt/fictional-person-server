@@ -20,9 +20,9 @@ function getNumber() {
     return (Math.random() * 499 + 1) | 0;
 }
 
-module.exports = function getAdress() {
-    var direction = getDirection();
+module.exports.getAdress = function getAdress() {
+    const direction = getDirection();
     const formattedDirection = direction == "" ? "" : direction + " "; // clean if statement
-    var finalAdress =`${formattedDirection}${getNoun()+getEnding().toLowerCase()} ${getNumber()}`;
+    const finalAdress =`${formattedDirection}${getNoun()+getEnding().toLowerCase()} ${getNumber()}`;
     return finalAdress;
 };
