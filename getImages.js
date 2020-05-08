@@ -1,6 +1,7 @@
 const fetch = require("node-fetch");
+const random = require("./random");
 
-module.exports.getImage = async function getImage(amount = 1, gender = "any", ageString = "any") {
+module.exports.getImage = async function getImage(amount = 1, gender = "any", ageString = "any", seed = Date.now()) {
     const agesString = ["adult", "elderly", "young-adult", "child"];
     const gendersString = ["female", "male"];
 
@@ -15,12 +16,12 @@ module.exports.getImage = async function getImage(amount = 1, gender = "any", ag
         if (!agesString.includes(ageString))
             return Promise.reject("Invalid age, please use adult, elderly, young-adult or child");
     } else { // if no age is specified, generate one
-        ageString = agesString[Math.random() * agesString.length | 0];
+        ageString = agesString[random(seed) * agesString.length | 0];
     }
 
     const genderURL = gendersString ? `&gender=${gender}` : ""; // format it so that if no gender is specified an image with any gender is found 
 
-    const page = Math.random() * 1000 | 0;
+    const page = random(seed) * 1000 | 0;
 
     if (amount == null) 
         amount = 1;
@@ -73,4 +74,4 @@ module.exports.getImage = async function getImage(amount = 1, gender = "any", ag
     return Promise.resolve(JSON);
 }
 
-module.exports.getImage(1, "male").then(json => console.log(json)).catch(err => console.log(err));
+module.exports.getImage(1, "male", "elderly").then(json => console.log(json.images[0].meta)).catch(err => console.log(err));
