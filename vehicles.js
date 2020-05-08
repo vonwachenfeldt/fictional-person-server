@@ -1,7 +1,13 @@
-module.exports.getVeichles = function getVeichles(amount) {
-    var veichleResult = [];
+const random = require("./random.js");
+
+const vehicles = require("./json/vehicles.json");
+
+module.exports.getVehicles = function getVehicles(amount = 1, seed = Date.now()) {
+    var vehicleResults = [];
     for (let i = 0; i < amount; i++) {
-        veichleResult.push(veichle[(Math.random() * veichle.length) | 0]);
+        vehicleResults.push(vehicles[(random(seed) * vehicles.length) | 0]);
+
+        seed = random.increaseSeed(seed);
     }
-    return veichleResult;
+    return vehicleResults;
 };

@@ -1,7 +1,13 @@
-module.exports.getResidences = function getResidences(amount) {
-    var residenceResult = [];
+const random = require("./random.js");
+
+const residences = require("./json/residences.json");
+
+module.exports.getResidences = function getResidences(amount = 1, seed = Date.now()) {
+    var residenceResults = [];
     for (let i = 0; i < amount; i++) {
-        residenceResult.push(residence[(Math.random() * residence.length) | 0]);
+        residenceResults.push(residences[(random(seed) * residences.length) | 0]);
+
+        seed = random.increaseSeed(seed);
     }
-    return residenceResult;
+    return residenceResults;
 };
