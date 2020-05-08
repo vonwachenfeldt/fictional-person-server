@@ -1,7 +1,11 @@
-module.exports.getCrime = function getCrime(amount) {
+const random = require("./random");
+
+const crimes = require("./json/crimes.json")
+
+module.exports.getCrimes = function getCrimes(amount, seed) {
     var crimeResult = [];
     for(let i = 0; i < amount; i++){
-        crimeResult.push(crimes[(Math.random() * crimes.length) | 0]);
+        crimeResult.push(crimes[(random(seed) * crimes.length) | 0]);
     }
     return crimeResult; 
 };

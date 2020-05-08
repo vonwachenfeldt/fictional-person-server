@@ -1,28 +1,33 @@
-function getNoun() {
-    return adresses.nouns[(Math.random() * adresses.substantiv.length) | 0];
+const random = require("./random");
+
+const adresses = require("./json/adresses.json");
+
+function getNoun(seed) {
+    return adresses.nouns[(random(seed) * adresses.nouns.length) | 0];
     // |0=floor
 }
 
-function getEnding() {
-    return adresses.endings[(Math.random() * adresses.ändelser.length) | 0];
+function getEnding(seed) {
+    return adresses.endings[(random(seed) * adresses.endings.length) | 0];
 }
 
-function getDirection() {
-    if ((Math.random() * 4) | (0 != 0)) {
+function getDirection(seed) {
+    if ((random(seed) * 4) | (0 != 0)) {
         return "";
     }
     return adresses.directions[
-        (Math.random() * adresses.väderstreck.length) | 0
+        (random(seed) * adresses.directions.length) | 0
     ];
 }
 
-function getNumber() {
-    return (Math.random() * 499 + 1) | 0;
+function getNumber(seed) {
+    return (random(seed) * 499 + 1) | 0;
 }
 
-module.exports.getAdress = function getAdress() {
-    const direction = getDirection();
+module.exports.getAdress = function getAdress(seed) {
+    const direction = getDirection(seed);
     const formattedDirection = direction == "" ? "" : direction + " "; // clean if statement
-    const finalAdress = `${formattedDirection}${getNoun() + getEnding().toLowerCase()} ${getNumber()}`;
+    const finalAdress = `${formattedDirection}${getNoun(seed) + getEnding(seed).toLowerCase(seed)} ${getNumber(seed)}`;
+
     return finalAdress;
 };
