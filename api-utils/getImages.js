@@ -1,5 +1,5 @@
 const fetch = require("node-fetch");
-const random = require("./random");
+const random = require("../utils/random");
 
 module.exports.getImages = async function getImages(amount = 1, gender = "any", ageString = "any", seed = Date.now()) {
     const agesString = ["adult", "elderly", "young-adult", "child"];

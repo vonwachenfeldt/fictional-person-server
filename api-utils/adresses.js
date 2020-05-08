@@ -1,6 +1,6 @@
-const random = require("./random");
+const random = require("../utils/random");
 
-const adresses = require("./json/adresses.json");
+const adresses = require("../json/adresses.json");
 
 function getNoun(seed = Date.now()) {
     return adresses.nouns[(random(seed) * adresses.nouns.length) | 0];

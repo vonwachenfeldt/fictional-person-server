@@ -1,7 +1,7 @@
-const random = require("./random");
+const random = require("../utils/random");
 
-const firstnames = require("./json/firstnames.json");
-const surnames = require("./json/surnames.json");
+const firstnames = require("../json/firstnames.json");
+const surnames = require("../json/surnames.json");
 
 module.exports.getFullNames = function getFullNames(amount = 1, gender = ["female", "male"][(Math.random() * 2) | 0], seed = Date.now()) {
     if (gender != "female" && gender != "male") {

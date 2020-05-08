@@ -1,6 +1,6 @@
-const random = require("./random");
+const random = require("../utils/random");
 
-const politicalParties = require("./json/politicalParties.json")
+const politicalParties = require("../json/politicalParties.json")
 
 module.exports.getPoliticalParties = function getPoliticalParties(amount = 1, seed = Date.now()) {
     var politicalPartiesResult = [];

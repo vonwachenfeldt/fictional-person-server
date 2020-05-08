@@ -1,5 +1,5 @@
 module.exports = function random(seed = Date.now()) {
-    if (typeof seed === "string") { 
+    if (typeof seed === "string") {
         var stringSeed = seed;
 
         seed = 0;
@@ -14,8 +14,8 @@ module.exports = function random(seed = Date.now()) {
     return x - Math.floor(x);
 }
 
-module.exports.increaseSeed = function increaseSeed(seed) { return seed + 2}
+module.exports.increaseSeed = function increaseSeed(seed) { return seed + 2 }
 
-module.exports.random = function range(min, max, seed = Date.now()) {
+module.exports.range = function range(min, max, seed) {
     return module.exports(seed) * (max - min + 1) + min | 0;
 }

@@ -1,6 +1,6 @@
-const random = require("./random.js");
+const random = require("../utils/random.js");
 
-const residences = require("./json/residences.json");
+const residences = require("../json/residences.json");
 
 module.exports.getResidences = function getResidences(amount = 1, seed = Date.now()) {
     var residenceResults = [];
