@@ -1,7 +1,15 @@
-module.exports.getPoliticalParties = function getPoliticalParties(amount) {
-    var politicalPartyResult = [];
+const random = require("./random");
+
+const politicalParties = require("./json/politicalParties.json")
+
+module.exports.getPoliticalParties = function getPoliticalParties(amount = 1, seed) {
+    var politicalPartiesResult = [];
     for (let i = 0; i < amount; i++) {
-        politicalPartyResult.push(politicalParty[(Math.random() * politicalParty.length) | 0]);
+        politicalPartiesResult.push(politicalParties[(Math.random() * politicalParties.length) | 0]);
+
+        seed = random.increaseSeed(seed);
     }
-    return politicalPartyResult;
+    return politicalPartiesResult;
 };
+
+console.log(module.exports.getPoliticalParties(1, "jonsson"))
