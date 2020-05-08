@@ -1,7 +1,7 @@
 const fetch = require("node-fetch");
 const random = require("./random");
 
-module.exports.getImage = async function getImage(amount = 1, gender = "any", ageString = "any", seed) {
+module.exports.getImages = async function getImages(amount = 1, gender = "any", ageString = "any", seed) {
     const agesString = ["adult", "elderly", "young-adult", "child"];
     const gendersString = ["female", "male"];
 
@@ -23,7 +23,7 @@ module.exports.getImage = async function getImage(amount = 1, gender = "any", ag
 
     const page = random(seed) * 1000 | 0;
 
-    if (amount == null) 
+    if (amount == null)
         amount = 1;
 
     const URL = `https://api.generated.photos/api/frontend/v1/images?order_by=latest&page=${page}&per_page=${amount}${genderURL}&age=${ageString}`;
@@ -68,10 +68,10 @@ module.exports.getImage = async function getImage(amount = 1, gender = "any", ag
 
         meta.age_range = age;
         meta.hair_color_translated = hairColor;
-        meta.eye_color_translated = eyeColor;  
+        meta.eye_color_translated = eyeColor;
     }
 
     return Promise.resolve(JSON);
 }
 
-module.exports.getImage(1, "male", "elderly").then(json => console.log(json.images[0].meta)).catch(err => console.log(err));
+module.exports.getImages(1, "male", "elderly").then(json => console.log(json.images[0].meta)).catch(err => console.log(err));

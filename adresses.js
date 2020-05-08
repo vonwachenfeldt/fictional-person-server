@@ -24,7 +24,7 @@ function getNumber(seed) {
     return (random(seed) * 499 + 1) | 0;
 }
 
-module.exports.getAdress = function getAdress(seed) {
+module.exports.getAdresses = function getAdresses(seed) {
     const direction = getDirection(seed);
     const formattedDirection = direction == "" ? "" : direction + " "; // clean if statement
     const finalAdress = `${formattedDirection}${getNoun(seed) + getEnding(seed).toLowerCase(seed)} ${getNumber(seed)}`;

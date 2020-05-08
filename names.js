@@ -1,4 +1,4 @@
-module.exports.getFullName = function getFullName(
+module.exports.getFullNames = function getFullNames(
     gender = ["female", "male"][(Math.random() * 2) | 0],
     amount = 1
 ) {
