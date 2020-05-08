@@ -1,6 +1,6 @@
 const random = require("../utils/random");
 
-modules.exports.getWeights = function getWeights(amount = 1, min = 30, max = 100, seed = Date.now()) {
+module.exports.getWeights = function getWeights(amount = 1, min = 30, max = 100, seed = Date.now()) {
     var weightResults = [];
     for (let i = 0; i < amount; i++) {
         weightResults.push({
@@ -12,7 +12,7 @@ modules.exports.getWeights = function getWeights(amount = 1, min = 30, max = 100
     return weightResults;
 }
 
-modules.exports.getHeights = function getHeights(amount = 1, min = 110, max = 210, seed = Date.now()) {
+module.exports.getHeights = function getHeights(amount = 1, min = 110, max = 210, seed = Date.now()) {
     var heightResults = [];
     for (let i = 0; i < amount; i++) {
         heightResults.push({
@@ -24,6 +24,6 @@ modules.exports.getHeights = function getHeights(amount = 1, min = 110, max = 21
     return heightResults;
 }
 
-modules.exports.getBMI = function getBMI(height, weight) {
+module.exports.getBMI = function getBMI(height, weight) {
     return parseFloat((weight / (height * height)).toFixed(1));
 }

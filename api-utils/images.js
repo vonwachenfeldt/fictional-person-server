@@ -73,5 +73,3 @@ module.exports.getImages = async function getImages(amount = 1, gender = "any", 
 
     return Promise.resolve(JSON);
 }
-
-module.exports.getImages(1, "male", "elderly").then(json => console.log(json.images[0].meta)).catch(err => console.log(err));
