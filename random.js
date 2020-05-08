@@ -13,3 +13,5 @@ module.exports = function random(seed = Date.now()) {
 
     return x - Math.floor(x);
 }
+
+module.exports.increaseSeed = function increaseSeed(seed) { return seed + 2}

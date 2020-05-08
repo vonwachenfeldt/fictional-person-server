@@ -2,10 +2,15 @@ const random = require("./random");
 
 const locations = require("./json/locations.json");
 
-module.exports.getLocations = function getLocations(amount) {
-    var locationResult = [];
+module.exports.getLocations = function getLocations(amount, seed) {
+    var locationsResult = [];
     for (let i = 0; i < amount; i++) {
-        locationResult.push({ municipality: municipalities[(Math.random() * municipalities.length) | 0], urbanArea: urbanAreas[(Math.random() * urbanAreas.length) | 0] });
+        locationsResult.push({ 
+            municipality: locations.municipalities[(random(seed) * locations.municipalities.length) | 0], 
+            urbanArea: locations.urbanAreas[(random(seed) * locations.urbanAreas.length) | 0] 
+        });
+
+        seed = random.increaseSeed(seed);
     }
-    return locationResult;
+    return locationsResult;
 };
