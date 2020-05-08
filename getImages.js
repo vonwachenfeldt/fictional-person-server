@@ -1,17 +1,32 @@
 const fetch = require("node-fetch");
 
-module.exports.getImage = async function getImage(amount = 1, gender = ["female", "male"][Math.random() * 2 | 0]) {
+module.exports.getImage = async function getImage(amount = 1, gender = "any", ageString = "any") {
+    const agesString = ["adult", "elderly", "young-adult", "child"];
+    const gendersString = ["female", "male"];
+
+    if (gender !== "any") { // only run if gender isn't specified to be any gender
+        // check if the specified gender doesn't exist in the genders array
+        if (!gendersString.includes(gender))
+            return Promise.reject("Invalid gender, please use male or female");
+    }
+
+    if (ageString !== "any") {
+        // check if the specified age exists in the ages array
+        if (!agesString.includes(ageString))
+            return Promise.reject("Invalid age, please use adult, elderly, young-adult or child");
+    } else { // if no age is specified, generate one
+        ageString = agesString[Math.random() * agesString.length | 0];
+    }
+
+    const ageStringURL = ageString ? `&age=${ageString}` : ""; // format it so that if no age is specified an image with any age is found 
+    const genderURL = ageString ? `&age=${ageString}` : ""; // format it so that if no gender is specified an image with any gender is found 
+
     const page = Math.random() * 1000 | 0;
 
-    if (amount == null) {
+    if (amount == null) 
         amount = 1;
-    }
 
-    if (gender != "female" && gender != "male") {
-        return Promise.reject("Invalid gender, please use male or female");
-    }
-
-    const URL = `https://api.generated.photos/api/frontend/v1/images?order_by=latest&page=${page}&per_page=${amount}&gender=${gender}`;
+    const URL = `https://api.generated.photos/api/frontend/v1/images?order_by=latest&page=${page}&per_page=${amount}${genderURL}${ageStringURL}`;
 
     const response = await fetch(URL, {
         headers: [["Authorization", "API-Key Cph30qkLrdJDkjW-THCeyA"]]
@@ -21,38 +36,42 @@ module.exports.getImage = async function getImage(amount = 1, gender = ["female"
 
     for (let i = 0; i < JSON.images.length; i++) {
         var meta = JSON.images[i].meta;
-    }
 
-    var age = meta.age.toString();
-    const hairColor = meta.hair_color.toString();
-    const eyeColor = meta.eye_color.toString();
+        var age = meta.age[0]; // same as toString() but better
+        var hairColor = meta.hair_color[0];
+        var eyeColor = meta.eye_color[0];
 
-    switch (age) {
-        case "child": age = [7, 15];
-        case "young-adult": age = [16, 39];
-        case "adult": age = [40, 54];
-        case "elderly": age = [55, 80];
-        default: null;
-    }
+        switch (age) {
+            case "child": age = [7, 15];
+            case "young-adult": age = [16, 39];
+            case "adult": age = [40, 54];
+            case "elderly": age = [55, 80];
+            default: null; break;
+        }
 
-    switch (hairColor) {
-        case "gray": hairColor = "grå";
-        case "brown": hairColor = "brun";
-        case "blond": hairColor = "blond";
-        case "red": hairColor = "röd";
-        case "black": hairColor = "black";
-        default: null;
-    }
+        switch (hairColor) {
+            case "gray": hairColor = "grå"; break;
+            case "brown": hairColor = "brun"; break;
+            case "blond": hairColor = "blond"; break;
+            case "red": hairColor = "röd"; break;
+            case "black": hairColor = "svart"; break;
+            default: null; break;
+        }
 
-    switch (eyeColor) {
-        case "gray": eyeColor = "grå";
-        case "brown": eyeColor = "brun";
-        case "blue": eyeColor = "blå";
-        case "green": eyeColor = "grön";
-        default: null;
+        switch (eyeColor) {
+            case "gray": eyeColor = "grå"; break;
+            case "brown": eyeColor = "brun"; break;
+            case "blue": eyeColor = "blå"; break;
+            case "green": eyeColor = "grön"; break;
+            default: null; break;
+        }
+
+        meta.age_range = age;
+        meta.hair_color_translated = hairColor;
+        meta.eye_color_translated = eyeColor;  
     }
 
     return Promise.resolve(JSON);
 }
 
-module.exports.getImage(1).catch(err => console.log(err));
+module.exports.getImage(1, "male", "").then(json => console.log(json.images[0].meta)).catch(err => console.log(err));
