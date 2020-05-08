@@ -24,10 +24,17 @@ function getNumber(seed) {
     return (random(seed) * 499 + 1) | 0;
 }
 
-module.exports.getAdresses = function getAdresses(seed) {
-    const direction = getDirection(seed);
-    const formattedDirection = direction == "" ? "" : direction + " "; // clean if statement
-    const finalAdress = `${formattedDirection}${getNoun(seed) + getEnding(seed).toLowerCase(seed)} ${getNumber(seed)}`;
+module.exports.getAdresses = function getAdresses(amount = 1, seed) {
+    var adressesResult = [];
+    for (let i = 0; i < amount; i++) {
+        const direction = getDirection(seed);
+        const formattedDirection = direction == "" ? "" : direction + " "; // clean if statement
+        const finalAdress = `${formattedDirection}${getNoun(seed) + getEnding(seed).toLowerCase(seed)} ${getNumber(seed)}`;
 
-    return finalAdress;
+        adressesResult.push(finalAdress);
+
+        seed = random.increaseSeed(seed);
+    }
+
+    return adressesResult;
 };
