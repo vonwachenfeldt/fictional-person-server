@@ -23,6 +23,6 @@ function getNumber() {
 module.exports.getAdress = function getAdress() {
     const direction = getDirection();
     const formattedDirection = direction == "" ? "" : direction + " "; // clean if statement
-    const finalAdress =`${formattedDirection}${getNoun()+getEnding().toLowerCase()} ${getNumber()}`;
+    const finalAdress = `${formattedDirection}${getNoun() + getEnding().toLowerCase()} ${getNumber()}`;
     return finalAdress;
 };

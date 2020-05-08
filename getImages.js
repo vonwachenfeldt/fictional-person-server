@@ -3,11 +3,11 @@ const fetch = require("node-fetch");
 module.exports.getImage = async function getImage(amount = 1, gender = ["female", "male"][Math.random() * 2 | 0]) {
     const page = Math.random() * 1000 | 0;
 
-    if(amount == null) {
+    if (amount == null) {
         amount = 1;
     }
 
-    if(gender != "female" && gender != "male") {
+    if (gender != "female" && gender != "male") {
         return Promise.reject("Invalid gender, please use male or female");
     }
 

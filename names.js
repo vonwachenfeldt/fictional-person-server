@@ -4,7 +4,7 @@ module.exports.getFullName = function getFullName(
 ) {
     if (gender != "female" && gender != "male") {
         return {
-            err: "Invalid gender, please use male or female"
+            err: "Invalid gender, choose female OR male."
         };
     }
     var fullNameResults = [];
