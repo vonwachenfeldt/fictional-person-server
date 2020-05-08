@@ -1,7 +1,11 @@
-module.exports.getHobby = function getHobby(amount) {
+const random = require("./random");
+
+const hobbies = require("./json/hobbies.json");
+
+module.exports.getHobbies = function getHobbies(amount, seed) {
     var hobbiesResult = [];
     for(let i = 0; i < amount; i++){
-        hobbiesResult.push(hobbies[(Math.random() * hobbies.length) | 0]);
+        hobbiesResult.push(hobbies[(random(seed) * hobbies.length) | 0]);
     }
     return hobbiesResult; 
 };
