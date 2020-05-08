@@ -16,6 +16,6 @@ module.exports = function random(seed = Date.now()) {
 
 module.exports.increaseSeed = function increaseSeed(seed) { return seed + 2}
 
-module.exports.random = function range(min, max, seed) {
+module.exports.random = function range(min, max, seed = Date.now()) {
     return module.exports(seed) * (max - min + 1) + min | 0;
 }
