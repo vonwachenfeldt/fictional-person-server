@@ -1,6 +1,6 @@
-const random = require("./random.js");
+const random = require("../utils/random.js");
 
-const animals = require("./json/animals.json");
+const animals = require("../json/animals.json");
 
 module.exports.getAnimals = function getAnimals(amount = 1, seed = Date.now()) {
     var animalResults = [];

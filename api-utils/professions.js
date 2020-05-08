@@ -1,6 +1,6 @@
-const random = require("./random");
+const random = require("../utils/random");
 
-const professions = require("./json/professions.json");
+const professions = require("../json/professions.json");
 
 module.exports.getProfessions = function getProfessions(amount = 1, seed = Date.now()) {
     var professionsResult = [];

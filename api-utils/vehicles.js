@@ -1,6 +1,6 @@
-const random = require("./random.js");
+const random = require("../utils/random.js");
 
-const vehicles = require("./json/vehicles.json");
+const vehicles = require("../json/vehicles.json");
 
 module.exports.getVehicles = function getVehicles(amount = 1, seed = Date.now()) {
     var vehicleResults = [];
