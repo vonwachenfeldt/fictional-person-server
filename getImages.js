@@ -25,7 +25,7 @@ module.exports.getImage = async function getImage(amount = 1, gender = "any", ag
     if (amount == null) 
         amount = 1;
 
-    const URL = `https://api.generated.photos/api/frontend/v1/images?order_by=latest&page=${page}&per_page=${amount}${genderURL}&age=${ageStringURL}`;
+    const URL = `https://api.generated.photos/api/frontend/v1/images?order_by=latest&page=${page}&per_page=${amount}${genderURL}&age=${ageString}`;
 
     const response = await fetch(URL, {
         headers: [["Authorization", "API-Key Cph30qkLrdJDkjW-THCeyA"]]
@@ -73,4 +73,4 @@ module.exports.getImage = async function getImage(amount = 1, gender = "any", ag
     return Promise.resolve(JSON);
 }
 
-module.exports.getImage(1, "male", "").then(json => console.log(json.images[0].meta)).catch(err => console.log(err));
+module.exports.getImage(1, "male").then(json => console.log(json)).catch(err => console.log(err));
