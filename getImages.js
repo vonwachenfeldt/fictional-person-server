@@ -18,15 +18,14 @@ module.exports.getImage = async function getImage(amount = 1, gender = "any", ag
         ageString = agesString[Math.random() * agesString.length | 0];
     }
 
-    const ageStringURL = ageString ? `&age=${ageString}` : ""; // format it so that if no age is specified an image with any age is found 
-    const genderURL = ageString ? `&age=${ageString}` : ""; // format it so that if no gender is specified an image with any gender is found 
+    const genderURL = gendersString ? `&gender=${gender}` : ""; // format it so that if no gender is specified an image with any gender is found 
 
     const page = Math.random() * 1000 | 0;
 
     if (amount == null) 
         amount = 1;
 
-    const URL = `https://api.generated.photos/api/frontend/v1/images?order_by=latest&page=${page}&per_page=${amount}${genderURL}${ageStringURL}`;
+    const URL = `https://api.generated.photos/api/frontend/v1/images?order_by=latest&page=${page}&per_page=${amount}${genderURL}&age=${ageStringURL}`;
 
     const response = await fetch(URL, {
         headers: [["Authorization", "API-Key Cph30qkLrdJDkjW-THCeyA"]]
