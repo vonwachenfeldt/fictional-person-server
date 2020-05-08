@@ -1,3 +1,7 @@
+const random = require("./random");
+
+const locations = require("./json/locations.json");
+
 module.exports.getLocations = function getLocations(amount) {
     var locationResult = [];
     for (let i = 0; i < amount; i++) {
