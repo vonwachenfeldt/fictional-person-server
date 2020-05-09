@@ -5,6 +5,14 @@ xhr.addEventListener("load", event => {
     const data = JSON.parse(xhr.responseText);
     window.data = data;
 
+    if(window.data.age < 18){
+        window.data.profession = "Skolelev";
+    }
+    if(window.data.age < 19){
+        window.data.political_party = "Politiskt okunnig"
+    }
+
+
     document.getElementById("imageHolder").src = window.data.image.url;
     document.getElementById("nameHolder").innerHTML = " " + window.data.name.firstName + " " + window.data.name.surName;
     document.getElementById("ageHolder").innerHTML += " " + window.data.age;

@@ -43,8 +43,8 @@ module.exports.getImages = async function getImages(amount = 1, gender = "any", 
         var genderValue = meta.gender[0];
 
         switch (age) {
-            case "child": age = [7, 15]; break;
-            case "young-adult": age = [16, 39]; break;
+            case "child": age = [7, 13]; break;
+            case "young-adult": age = [14, 39]; break;
             case "adult": age = [40, 54]; break; 
             case "elderly": age = [55, 80]; break;
             default: null; break;

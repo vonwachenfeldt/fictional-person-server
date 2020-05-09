@@ -22,8 +22,6 @@ async function getPerson(req, res) {
     var height = sizes.getHeights(1, undefined, undefined, seed)[0];
     var weight = sizes.getWeights(1, undefined, undefined, seed)[0];
 
-    console.log(gender);
-
     res.send({
         name: names.getFullNames(1, gender, seed)[0],
         age: random.range(image.meta.age_range[0], image.meta.age_range[1], seed),

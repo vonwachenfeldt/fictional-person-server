@@ -12,7 +12,7 @@ module.exports.getWeights = function getWeights(amount = 1, min = 40, max = 80, 
     return weightResults;
 }
 
-module.exports.getHeights = function getHeights(amount = 1, min = 110, max = 210, seed = Date.now()) {
+module.exports.getHeights = function getHeights(amount = 1, min = 140, max = 210, seed = Date.now()) {
     var heightResults = [];
     for (let i = 0; i < amount; i++) {
         heightResults.push({
