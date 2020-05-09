@@ -12,7 +12,6 @@ const vehicles = require("../api-utils/vehicles.js");
 const random = require("../utils/random.js");
 
 async function getPerson(req, res) {
-    console.log("test");
     var gender = req.query.gender;
     var ageGroup = req.query.ageGroup;
     var seed = req.query.seed || Date.now();
@@ -21,9 +20,12 @@ async function getPerson(req, res) {
     var height = sizes.getHeights(1, undefined, undefined, seed)[0];
     var weight = sizes.getWeights(1, undefined, undefined, seed)[0];
 
+    console.log(image.meta.age_range);
+
     res.send({
         name: names.getFullNames(1, gender, seed)[0],
         age: random.range(image.meta.age_range[0], image.meta.age_range[1], seed),
+        age_group: image.meta.age[0],
         gender: gender,
         height: height,
         weight: weight,

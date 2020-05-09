@@ -19,7 +19,7 @@ module.exports.getImages = async function getImages(amount = 1, gender = "any", 
         ageString = agesString[random(seed) * agesString.length | 0];
     }
 
-    const genderURL = gendersString ? `&gender=${gender}` : ""; // format it so that if no gender is specified an image with any gender is found 
+    const genderURL = gender != "any" ? `&gender=${gender}` : ""; // format it so that if no gender is specified an image with any gender is found 
 
     const page = random(seed) * 1000 | 0;
 
@@ -42,10 +42,10 @@ module.exports.getImages = async function getImages(amount = 1, gender = "any", 
         var eyeColor = meta.eye_color[0];
 
         switch (age) {
-            case "child": age = [7, 15];
-            case "young-adult": age = [16, 39];
-            case "adult": age = [40, 54];
-            case "elderly": age = [55, 80];
+            case "child": age = [7, 15]; break;
+            case "young-adult": age = [16, 39]; break;
+            case "adult": age = [40, 54]; break; 
+            case "elderly": age = [55, 80]; break;
             default: null; break;
         }
 
