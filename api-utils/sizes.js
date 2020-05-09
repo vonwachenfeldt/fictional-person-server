@@ -1,6 +1,6 @@
 const random = require("../utils/random");
 
-module.exports.getWeights = function getWeights(amount = 1, min = 30, max = 100, seed = Date.now()) {
+module.exports.getWeights = function getWeights(amount = 1, min = 40, max = 80, seed = Date.now()) {
     var weightResults = [];
     for (let i = 0; i < amount; i++) {
         weightResults.push({

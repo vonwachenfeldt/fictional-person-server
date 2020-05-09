@@ -40,6 +40,7 @@ module.exports.getImages = async function getImages(amount = 1, gender = "any", 
         var age = meta.age[0]; // same as toString() but better
         var hairColor = meta.hair_color[0];
         var eyeColor = meta.eye_color[0];
+        var genderValue = meta.gender[0];
 
         switch (age) {
             case "child": age = [7, 15]; break;
@@ -66,9 +67,15 @@ module.exports.getImages = async function getImages(amount = 1, gender = "any", 
             default: null; break;
         }
 
+        switch(genderValue) {
+            case "male": genderValue = "man"; break;
+            case "female": genderValue = "kvinna"; break;
+        }
+
         meta.age_range = age;
         meta.hair_color_translated = hairColor;
         meta.eye_color_translated = eyeColor;
+        meta.gender_translated = genderValue;
     }
 
     return Promise.resolve(JSON);

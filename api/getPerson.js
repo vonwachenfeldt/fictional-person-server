@@ -5,6 +5,7 @@ const hobbies = require("../api-utils/hobbies.js");
 const locations = require("../api-utils/locations.js");
 const names = require("../api-utils/names.js");
 const politicalParties = require("../api-utils/politicalParties.js");
+const meals = require("../api-utils/meals.js");
 const professions = require("../api-utils/professions.js");
 const residences = require("../api-utils/residences.js");
 const sizes = require("../api-utils/sizes.js");
@@ -17,16 +18,17 @@ async function getPerson(req, res) {
     var seed = req.query.seed || Date.now();
 
     const image = (await images.getImages(1, gender, ageGroup, seed)).images[0];
+    gender = image.meta.gender[0];
     var height = sizes.getHeights(1, undefined, undefined, seed)[0];
     var weight = sizes.getWeights(1, undefined, undefined, seed)[0];
 
-    console.log(image.meta.age_range);
+    console.log(gender);
 
     res.send({
         name: names.getFullNames(1, gender, seed)[0],
         age: random.range(image.meta.age_range[0], image.meta.age_range[1], seed),
         age_group: image.meta.age[0],
-        gender: gender,
+        gender: image.meta.gender_translated,
         height: height,
         weight: weight,
         bmi: sizes.getBMI(height.heightNumber, weight.weightNumber),
@@ -43,7 +45,7 @@ async function getPerson(req, res) {
         crime: crimes.getCrimes(1, seed)[0],
         vehicle: vehicles.getVehicles(1, seed)[0],
         political_party: politicalParties.getPoliticalParties(1, seed)[0],
-        favorite_meal: "PLACEHOLDER_meal",
+        favorite_meal: meals.getMeals(1, seed)[0],
         favorite_animal: "PLACEHOLDER_animal",
         seed: seed
     });
