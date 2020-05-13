@@ -6,7 +6,7 @@ const app = express();
 
 app.use(cors());
 
-app.get("/api/person", getPerson);
+app.use("/api/person", getPerson);
 
 module.exports = () => {
     const module = {};
