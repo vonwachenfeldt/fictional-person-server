@@ -3,6 +3,8 @@ const random = require("../utils/random");
 const locations = require("../json/locations.json");
 
 module.exports.getLocations = function getLocations(amount = 1, seed = Date.now()) {
+    seed = random.asHash(seed);
+    
     var locationsResult = [];
     for (let i = 0; i < amount; i++) {
         locationsResult.push({

@@ -13,7 +13,7 @@ module.exports = () => {
 
     const port = process.env.app_port || process.env.PORT || 5000;
 
-    module.startServer = () => app.listen(port, () => console.log("fictional-person's server running on port ", port));
+    module.startServer = () => app.listen(port, () => console.log("fictional-person's server running on port", port));
 
     module.app = app;
 

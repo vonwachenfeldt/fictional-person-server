@@ -1,4 +1,4 @@
-const random = require("../utils/random");
+const random = require("../utils/random.js");
 
 const adresses = require("../json/adresses.json");
 
@@ -25,6 +25,8 @@ function getNumber(seed = Date.now()) {
 }
 
 module.exports.getAdresses = function getAdresses(amount = 1, seed = Date.now()) {
+    seed = random.asHash(seed);
+
     var adressesResult = [];
     for (let i = 0; i < amount; i++) {
         const direction = getDirection(seed);

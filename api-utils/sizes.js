@@ -1,6 +1,8 @@
 const random = require("../utils/random");
 
 module.exports.getWeights = function getWeights(amount = 1, min = 40, max = 80, seed = Date.now()) {
+    seed = random.asHash(seed);
+
     var weightResults = [];
     for (let i = 0; i < amount; i++) {
         weightResults.push({
@@ -13,6 +15,8 @@ module.exports.getWeights = function getWeights(amount = 1, min = 40, max = 80, 
 }
 
 module.exports.getHeights = function getHeights(amount = 1, min = 140, max = 210, seed = Date.now()) {
+    seed = random.asHash(seed);
+    
     var heightResults = [];
     for (let i = 0; i < amount; i++) {
         heightResults.push({

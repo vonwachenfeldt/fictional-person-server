@@ -15,7 +15,9 @@ const random = require("../utils/random.js");
 async function getPerson(req, res) {
     var gender = req.query.gender;
     var ageGroup = req.query.ageGroup;
-    var seed = req.query.seed || Date.now();
+    var seed = parseInt(req.query.seed) || req.query.seed || Date.now();
+
+
 
     const image = (await images.getImages(1, gender, ageGroup, seed)).images[0];
     gender = image.meta.gender[0];

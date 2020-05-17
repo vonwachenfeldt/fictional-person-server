@@ -3,8 +3,15 @@ const random = require("../utils/random");
 const firstnames = require("../json/firstnames.json");
 const surnames = require("../json/surnames.json");
 
-module.exports.getFullNames = function getFullNames(amount = 1, gender = ["female", "male"][(Math.random() * 2) | 0], seed = Date.now()) {
-    if (gender != "female" && gender != "male") {
+module.exports.getFullNames = function getFullNames(amount = 1, gender = "any", seed = Date.now()) {
+    seed = random.asHash(seed);
+
+    const genders = ["female", "male"];
+
+    if (gender === "any")  // only run if gender isn't specified to be any gender
+        gender = genders[random(seed) * genders.length | 0]
+
+    if (!genders.includes(gender)) {
         return {
             err: "Invalid gender, choose female OR male."
         };

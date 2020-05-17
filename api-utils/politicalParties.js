@@ -3,6 +3,8 @@ const random = require("../utils/random");
 const politicalParties = require("../json/politicalParties.json")
 
 module.exports.getPoliticalParties = function getPoliticalParties(amount = 1, seed = Date.now()) {
+    seed = random.asHash(seed);
+    
     var politicalPartiesResult = [];
     for (let i = 0; i < amount; i++) {
         politicalPartiesResult.push(politicalParties[(random(seed) * politicalParties.length) | 0]);

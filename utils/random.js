@@ -1,20 +1,13 @@
-module.exports = function random(seed = Date.now()) {
-    if (typeof seed === "string") {
-        var stringSeed = seed;
+const seedrandom = require("seedrandom");
+const hash = require("./hash");
 
-        seed = 0;
-
-        for (let i = 0; i < stringSeed.length; i++) {
-            seed += stringSeed[i].charCodeAt(0);
-        }
-    }
-
-    var x = Math.sin(seed) * 10000;
-
-    return x - Math.floor(x);
+module.exports = function random(seed) {
+    return seedrandom(seed)();
 }
 
-module.exports.increaseSeed = function increaseSeed(seed) { return seed + 2 }
+module.exports.asHash = function asHash(seed) { return hash(seed); }
+
+module.exports.increaseSeed = function increaseSeed(seed) { return seed * 2 + 3 }
 
 module.exports.range = function range(min, max, seed) {
     return module.exports(seed) * (max - min + 1) + min | 0;

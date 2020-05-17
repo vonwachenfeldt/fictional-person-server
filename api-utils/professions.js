@@ -3,6 +3,8 @@ const random = require("../utils/random");
 const professions = require("../json/professions.json");
 
 module.exports.getProfessions = function getProfessions(amount = 1, seed = Date.now()) {
+    seed = random.asHash(seed);
+    
     var professionsResult = [];
     for (let i = 0; i < amount; i++) {
         professionsResult.push(professions[(random(seed) * professions.length) | 0]);
