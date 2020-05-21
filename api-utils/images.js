@@ -80,5 +80,11 @@ module.exports.getImages = async function getImages(amount = 1, gender = "any", 
         meta.gender_translated = genderValue;
     }
 
-    return Promise.resolve(JSON);
+    return JSON;
+}
+
+module.exports.getOne = async function getOne(gender = "any", ageGroup = "any", seed = Date.now()) {
+    const image = await module.exports.getImages(1, gender, ageGroup, seed);
+
+    return image.images[0];
 }

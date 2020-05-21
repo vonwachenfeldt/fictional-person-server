@@ -1,3 +1,7 @@
+const express = require("express");
+
+const router = express.Router();
+
 const adresses = require("../api-utils/adresses.js");
 const crimes = require("../api-utils/crimes.js");
 const images = require("../api-utils/images.js");
@@ -12,11 +16,10 @@ const sizes = require("../api-utils/sizes.js");
 const vehicles = require("../api-utils/vehicles.js");
 const random = require("../utils/random.js");
 
-async function getPerson(req, res) {
+router.get("/", async (req, res) => {
     var gender = req.query.gender;
     var ageGroup = req.query.ageGroup;
     var seed = parseInt(req.query.seed) || req.query.seed || Date.now();
-
 
 
     const image = (await images.getImages(1, gender, ageGroup, seed)).images[0];
@@ -49,5 +52,6 @@ async function getPerson(req, res) {
         favorite_animal: "PLACEHOLDER_animal",
         seed: seed
     });
-}
-module.exports = getPerson;
+})
+
+module.exports = router;

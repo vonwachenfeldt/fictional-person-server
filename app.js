@@ -1,12 +1,15 @@
 const express = require("express");
-const getPerson = require("./api/getPerson.js");
 const cors = require("cors");
+
+const person = require("./api/getPerson.js");
+const image = require("./api/getImage.js");
 
 const app = express();
 
 app.use(cors());
 
-app.use("/api/person", getPerson);
+app.use("/api/person", person);
+app.use("/api/image", image);
 
 module.exports = () => {
     const module = {};
