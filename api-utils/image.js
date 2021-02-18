@@ -24,6 +24,8 @@ const getImage = async (gender = "any", ageString = "any") => {
     // TODO: Why 1000?
     const page = Random.intMax(1000);
 
+    console.log(page, gender, ageString, genderURL)
+
     const url = `https://api.generated.photos/api/frontend/v1/images?order_by=latest&page=${page}&per_page=1${genderURL}&age=${ageString}`;
 
     const response = await fetch(url, {
@@ -32,6 +34,8 @@ const getImage = async (gender = "any", ageString = "any") => {
 
     const json = await response.json();
     const originalJson = JSON.parse(JSON.stringify(json)); // Remove the reference to the original object
+
+    //console.log(json.images);
     
     const meta = json.images[0].meta;
     const age = meta.age[0];

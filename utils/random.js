@@ -1,35 +1,39 @@
 const seedrandom = require("seedrandom");
 class Random {
-    static setSeed(seed) {
-        Random.seed = seed;
-        Random.random = seedrandom(seed);
+    constructor(seed) {
+        this.setSeed(seed);
+    }
+    
+    setSeed(seed) {
+        this.seed = seed;
+        this.random = seedrandom(seed);
     }
 
-    static getSeed(seed) {
-        return Random.seed;
+    getSeed() {
+        return this.seed;
     }
 
     /**
      * Returns a random int between 0 (inclusive) and max (exclusive)
      */
-    static intMax(max) {
-        return Math.floor(Random.random() * max); 
+    intMax(max) {
+        return Math.floor(this.random() * max); 
     }
 
     /**
      * Returns a random number between min (inclusive) and max (exclusive)
      */
-    static rangeFloat(min, max) {
-        return Random.random() * (max - min) + min;
+    rangeFloat(min, max) {
+        return this.random() * (max - min) + min;
     }
 
     /**
      * Returns a random integer between min (inclusive) and max (inclusive).
      */
-    static rangeInt(min, max) {
+    rangeInt(min, max) {
         min = Math.ceil(min);
         max = Math.floor(max);
-        return Math.floor(Random.random() * (max - min + 1)) + min;
+        return Math.floor(this.random() * (max - min + 1)) + min;
     }
 }
 

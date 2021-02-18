@@ -1,44 +1,12 @@
 const Person = require("../api-utils/Person");
 
-const Random = require("../utils/random.js");
-
 async function getPerson(req, res) {
     // Set the seed
     var seed = parseInt(req.query.seed) || req.query.seed || Date.now();
-    Random.setSeed(seed);
+    
+    const person = new Person(seed);
+    const generatedPerson = await person.generatePerson(req.query.gender, req.query.ageGroup);
 
-    // Get the image
-    const { image, imageUrl, imageResponse } = await Person.getImage(req.query.gender, req.query.ageGroup);
-
-    const { age, gender, ageRange, genderTranslated, hairColorTranslated, eyeColorTranslated } = image.meta;
-
-    const height = Person.getHeight();
-    const weight = Person.getWeight();
-
-    res.send({
-        name: Person.getName(gender),
-        age: Random.rangeInt(ageRange[0], ageRange[1]),
-        age_group: age,
-        gender: genderTranslated,
-        height: height,
-        weight: weight,
-        bmi: Person.getBMI(height.heightNumber, weight.weightNumber),
-        hairColor: hairColorTranslated,
-        eyeColor: eyeColorTranslated,
-        image: image,
-        imageUrl: imageUrl,
-        originalImageResponse: imageResponse,
-        location: Person.getLocation(),
-        adress: Person.getAdress(),
-        residence: Person.getResidence(),
-        profession: Person.getProfession(),
-        hobby: Person.getHobby(),
-        crime: Person.getCrime(),
-        vehicle: Person.getVehicle(),
-        politicalParty: Person.getPoliticalParty(),
-        favoriteMeal: Person.getMeal(),
-        favoriteAnimal: Person.getAnimal(),
-        seed: seed
-    });
+    res.json(generatedPerson);
 }
 module.exports = getPerson;
