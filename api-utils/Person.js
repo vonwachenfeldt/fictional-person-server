@@ -30,8 +30,8 @@ const getName = (gender = "any") => {
         return;
 
     return {
-        firstName: firstnames[gender][Random.intMax(firstnames[gender].length)],
-        surName: surnames[Random.intMax(surnames.length)]
+        firstname: firstnames[gender][Random.intMax(firstnames[gender].length)],
+        surname: surnames[Random.intMax(surnames.length)]
     };
 }
 module.exports.getName = getName;

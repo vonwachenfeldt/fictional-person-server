@@ -87,7 +87,8 @@ const getImage = async (gender = "any", ageString = "any") => {
 
     return { 
         imageResponse: originalJson, 
-        image: json.images[0]
+        image: json.images[0],
+        imageUrl: json.images[0].thumb_url
     };
 }
 module.exports.getImage = getImage;

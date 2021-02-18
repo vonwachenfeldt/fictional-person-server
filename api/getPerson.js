@@ -8,7 +8,7 @@ async function getPerson(req, res) {
     Random.setSeed(seed);
 
     // Get the image
-    const { image, imageResponse } = await Person.getImage(req.query.gender, req.query.ageGroup);
+    const { image, imageUrl, imageResponse } = await Person.getImage(req.query.gender, req.query.ageGroup);
 
     const { age, gender, ageRange, genderTranslated, hairColorTranslated, eyeColorTranslated } = image.meta;
 
@@ -26,6 +26,7 @@ async function getPerson(req, res) {
         hairColor: hairColorTranslated,
         eyeColor: eyeColorTranslated,
         image: image,
+        imageUrl: imageUrl,
         originalImageResponse: imageResponse,
         location: Person.getLocation(),
         adress: Person.getAdress(),
@@ -34,7 +35,7 @@ async function getPerson(req, res) {
         hobby: Person.getHobby(),
         crime: Person.getCrime(),
         vehicle: Person.getVehicle(),
-        political_party: Person.getPoliticalParty(),
+        politicalParty: Person.getPoliticalParty(),
         favoriteMeal: Person.getMeal(),
         favoriteAnimal: Person.getAnimal(),
         seed: seed
