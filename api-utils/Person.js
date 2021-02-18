@@ -15,7 +15,7 @@ const adresses = require("../json/adresses.json");
 const animals = require("../json/animals.json");
 const firstnames = require("../json/firstnames.json");
 const surnames = require("../json/surnames.json");
-
+const personalityTraits = require("../json/personalityTraits.json");
 class Person {
     constructor(seed) {
         this.seed = seed;
@@ -50,6 +50,8 @@ class Person {
             urbanArea: locations.urbanAreas[this.random.intMax(locations.urbanAreas.length)]
         }
     };
+    // Personality Traits
+    getPersonalityTrait() { return personalityTraits[this.random.intMax(personalityTraits.length)]; }
     // Hobbies
     getHobby() { return hobbies[this.random.intMax(hobbies.length)]; }
     // Crimes
@@ -104,6 +106,9 @@ class Person {
             // check if the specified gender doesn't exist in the genders array
             if (!gendersString.includes(gender))
                 throw "Invalid gender, please use male or female";
+        } else {
+            // Randomize gender
+            gender = gendersString[this.random.intMax(gendersString.length)];
         }
     
         if (ageString !== "any") {
@@ -221,6 +226,7 @@ class Person {
             politicalParty: this.getPoliticalParty(),
             favoriteMeal: this.getMeal(),
             favoriteAnimal: this.getAnimal(),
+            personalityTrait: this.getPersonalityTrait(),
             seed: this.seed
         };
 
