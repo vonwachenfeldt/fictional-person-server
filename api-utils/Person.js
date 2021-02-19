@@ -65,7 +65,7 @@ class Person {
     // Weight
     getWeight(min = 40, max = 80) { 
         return {
-            weightFormatted: this.random.rangeInt(min, max).toString() + "kg",
+            weightFormatted = weightNumber + "kg",
             weightNumber: this.random.rangeInt(min, max)
         }
     };
