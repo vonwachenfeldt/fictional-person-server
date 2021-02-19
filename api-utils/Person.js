@@ -64,9 +64,10 @@ class Person {
     getPoliticalParty() { return politicalParties[this.random.intMax(politicalParties.length)]; }
     // Weight
     getWeight(min = 40, max = 80) { 
+        var weight = this.random.rangeInt(min, max);
         return {
-            weightNumber: this.random.rangeInt(min, max),
-            weightFormatted: weightNumber.toString() + "kg"
+            weightNumber: weight,
+            weightFormatted: weight.toString() + "kg"
         }
     };
     // Height
