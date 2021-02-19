@@ -121,6 +121,8 @@
         "Norra",
         "Östra",
         "Västra",
-        "Södra"
+        "Södra",
+        "Övre",
+        "Undre"
     ]
 }

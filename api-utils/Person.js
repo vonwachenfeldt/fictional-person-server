@@ -13,7 +13,7 @@ const crimes = require("../json/crimes.json");
 const professions = require("../json/professions.json");
 const adresses = require("../json/adresses.json");
 const animals = require("../json/animals.json");
-const firstnames = require("../json/firstnames.json");
+const firstnames = require("../json/firstnamesEthnicity.json");
 const surnames = require("../json/surnames.json");
 const personalityTraits = require("../json/personalityTraits.json");
 const diseases = require("../json/diseases.json");
@@ -32,10 +32,13 @@ class Person {
     
         if (!genders.includes(gender))
             return;
+
+        const firstname = firstnames[gender][this.random.intMax(firstnames[gender].length)];
     
         return {
-            firstname: firstnames[gender][this.random.intMax(firstnames[gender].length)],
-            surname: surnames[this.random.intMax(surnames.length)]
+            firstname: firstname.name,
+            surname: surnames[this.random.intMax(surnames.length)],
+            ethnicity: firstname.ethnicity
         };
     };
     // Vechicles
