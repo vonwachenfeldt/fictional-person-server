@@ -65,8 +65,8 @@ class Person {
     // Weight
     getWeight(min = 40, max = 80) { 
         return {
-            weightFormatted = weightNumber + "kg",
-            weightNumber: this.random.rangeInt(min, max)
+            weightNumber: this.random.rangeInt(min, max),
+            weightFormatted: weightNumber + "kg"
         }
     };
     // Height
