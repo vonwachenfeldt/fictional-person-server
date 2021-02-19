@@ -17,6 +17,7 @@ const firstnames = require("../json/firstnamesEthnicity.json");
 const surnames = require("../json/surnames.json");
 const personalityTraits = require("../json/personalityTraits.json");
 const diseases = require("../json/diseases.json");
+const organizations = require("../json/organizations.json");
 class Person {
     constructor(seed) {
         this.seed = seed;
@@ -68,6 +69,8 @@ class Person {
     getPoliticalParty() { return politicalParties[this.random.intMax(politicalParties.length)]; }
     // Diseases
     getDisease() { return diseases[this.random.intMax(diseases.length)]; }
+    // Organization
+    getOrganization() { return organizations[this.random.intMax(organizations.length)]; }
     // Weight
     getWeight(min = 40, max = 80) { 
         var weight = this.random.rangeInt(min, max);
@@ -235,6 +238,7 @@ class Person {
             favoriteAnimal: this.getAnimal(),
             personalityTrait: this.getPersonalityTrait(),
             disease: this.getDisease(),
+            organization: this.getOrganization(),
             seed: this.seed
         };
 
