@@ -22,6 +22,10 @@ class Person {
     constructor(seed) {
         this.seed = seed;
         this.random = new Random(seed);
+
+        this.ages = ["adult", "elderly", "young-adult", "child"];
+        this.genders = ["female", "male"];
+        this.ethnicities = ["white", "black", "latino", "asian"];
     }
 
     // Names
@@ -108,60 +112,82 @@ class Person {
     };
 
     // Images
-    async getImage(genderString = "any", ageString = "any") { 
-        const agesString = ["adult", "elderly", "young-adult", "child"];
-        const gendersString = ["female", "male"];
-    
-        if (genderString !== "any") { // only run if gender isn't specified to be any gender
-            // check if the specified gender doesn't exist in the genders array
-            if (!gendersString.includes(gender))
-                throw "Invalid gender, please use male or female";
-        } else {
-            // Randomize gender
-            genderString = gendersString[this.random.intMax(gendersString.length)];
-        }
-    
-        if (ageString !== "any") {
-            // check if the specified age exists in the ages array
-            if (!agesString.includes(ageString))
-                throw "Invalid age, please use adult, elderly, young-adult or child";
-        } else { // if no age is specified, generate one
-            ageString = agesString[this.random.intMax(agesString.length)];
-        }
-
-        const ethnicities = ["white", "black", "latino", "asian"];
-        const ethnicityString = ethnicities[this.random.intMax(ethnicities.length)];
-
-
+    async getImageQuantities(gender, age, ethnicity) {
         // Get how many images exists with the current attributes
-        const getImageQuantity = async () => {
+        const updateImageQuantity = async (gender, age, ethnicity) => {
             const url = 
-                `https://api.generated.photos/api/frontend/v1/filters?gender=${genderString}&age=${ageString}&ethnicity=${ethnicityString}`;
+                `https://api.generated.photos/api/frontend/v1/filters?gender=${gender}&age=${age}&ethnicity=${ethnicity}`;
 
             const response = await fetch(url, { headers: [["Authorization", "API-Key Cph30qkLrdJDkjW-THCeyA"]] });
             const json = await response.json();
 
-            const count = json.filters[2 /* gender */].values[0].count; 
+            const count = json.filters[2].values[0].count; 
 
-            return count;
+            // Update the variable
+            if (!Person.imageQuantityCache[gender])
+                Person.imageQuantityCache[gender] = {};
+            if (!Person.imageQuantityCache[gender][age])
+                Person.imageQuantityCache[gender][age] = {};
+
+            Person.imageQuantityCache[gender][age][ethnicity] = count;
         } 
 
-        var imageCount = await getImageQuantity();
+        // check if it exists in the cache
+        try {
+            const count = Person.imageQuantityCache[gender][age][ethnicity];
+
+            return count;
+        } catch (error) {
+            // doesn't exist, so update all the cached variables7
+
+            const promises = [];
+            for (let g = 0; g < this.genders.length; g++) {
+                for (let a = 0; a < this.ages.length; a++) {
+                    for (let e = 0; e < this.ethnicities.length; e++) {
+                        promises.push(updateImageQuantity(this.genders[g], this.ages[a], this.ethnicities[e]));
+                    }
+                }
+            }
+
+            await Promise.all(promises);
+
+            console.log("Done updating cache");
+
+            const count = Person.imageQuantityCache[gender][age][ethnicity];
+            return count;
+        }
+    }
+
+    async getImage(gender = "any") { 
+        if (gender !== "any") { // only run if gender isn't specified to be any gender
+            // check if the specified gender doesn't exist in the genders array
+            if (!this.genders.includes(gender))
+                throw "Invalid gender, please use male or female";
+        } else {
+            // Randomize gender
+            gender = this.genders[this.random.intMax(this.genders.length)];
+        }
+    
+        const age = this.ages[this.random.intMax(this.ages.length)];
+        const ethnicity = this.ethnicities[this.random.intMax(this.ethnicities.length)];
+
+        // Get how many images exists with the current attributes
+        var imageCount = await this.getImageQuantities(gender, age, ethnicity);
 
         // create a white person if no person with those attributes exists
         if (imageCount === 0) {
-            ethnicityString = "white";
+            ethnicity = "white";
 
-            imageCount = await getImageQuantity();
+            imageCount = await this.getImageQuantity(gender, age, ethnicity);
         }
         // Choose a page to get images from
         const randomPage = this.random.intMax(imageCount - 1) + 1;
 
         console.log("Gender: %s, age: %s, ethnicity: %s, page %s of %s",
-            genderString, ageString, ethnicityString, randomPage, imageCount);
+            gender, age, ethnicity, randomPage, imageCount);
     
         const url = 
-            `https://api.generated.photos/api/frontend/v1/images?order_by=latest&page=${randomPage}&per_page=1&gender=${genderString}&age=${ageString}&ethnicity=${ethnicityString}`;
+            `https://api.generated.photos/api/frontend/v1/images?order_by=latest&page=${randomPage}&per_page=1&gender=${gender}&age=${age}&ethnicity=${ethnicity}`;
     
         const response = await fetch(url, {
             headers: [["Authorization", "API-Key Cph30qkLrdJDkjW-THCeyA"]]
@@ -174,10 +200,8 @@ class Person {
 
         const originalJson = JSON.parse(JSON.stringify(json)); // Remove the reference to the original object
         
-        const age = image.meta.age[0];
         const hairColor = image.meta.hair_color[0];
         const eyeColor = image.meta.eye_color[0];
-        const genderValue = image.meta.gender[0];
     
         var ageRange = [];
         switch (age) {
@@ -205,7 +229,7 @@ class Person {
         }
     
         var genderTranslated = "";
-        switch(genderValue) {
+        switch(gender) {
             case "male": genderTranslated = "man"; break;
             case "female": genderTranslated = "kvinna"; break;
         }
@@ -275,5 +299,8 @@ class Person {
         return person;
     }
 }
+
+// init image quantities cache
+Person.imageQuantityCache = {};
 
 module.exports = Person;
