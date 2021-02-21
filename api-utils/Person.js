@@ -108,17 +108,17 @@ class Person {
     };
 
     // Images
-    async getImage(gender = "any", ageString = "any") { 
+    async getImage(genderString = "any", ageString = "any") { 
         const agesString = ["adult", "elderly", "young-adult", "child"];
         const gendersString = ["female", "male"];
     
-        if (gender !== "any") { // only run if gender isn't specified to be any gender
+        if (genderString !== "any") { // only run if gender isn't specified to be any gender
             // check if the specified gender doesn't exist in the genders array
             if (!gendersString.includes(gender))
                 throw "Invalid gender, please use male or female";
         } else {
             // Randomize gender
-            gender = gendersString[this.random.intMax(gendersString.length)];
+            genderString = gendersString[this.random.intMax(gendersString.length)];
         }
     
         if (ageString !== "any") {
@@ -128,26 +128,56 @@ class Person {
         } else { // if no age is specified, generate one
             ageString = agesString[this.random.intMax(agesString.length)];
         }
+
+        const ethnicities = ["white", "black", "latino", "asian"];
+        const ethnicityString = ethnicities[this.random.intMax(ethnicities.length)];
+
+
+        // Get how many images exists with the current attributes
+        const getImageQuantity = async () => {
+            const url = 
+                `https://api.generated.photos/api/frontend/v1/filters?gender=${genderString}&age=${ageString}&ethnicity=${ethnicityString}`;
+
+            const response = await fetch(url, { headers: [["Authorization", "API-Key Cph30qkLrdJDkjW-THCeyA"]] });
+            const json = await response.json();
+
+            const count = json.filters[2 /* gender */].values[0].count; 
+
+            return count;
+        } 
+
+        var imageCount = await getImageQuantity();
+
+        // create a white person if no person with those attributes exists
+        if (imageCount === 0) {
+            ethnicityString = "white";
+
+            imageCount = await getImageQuantity();
+        }
+        // Choose a page to get images from
+        const randomPage = this.random.intMax(imageCount - 1) + 1;
+
+        console.log("Gender: %s, age: %s, ethnicity: %s, page %s of %s",
+            genderString, ageString, ethnicityString, randomPage, imageCount);
     
-        const genderURL = gender != "any" ? `&gender=${gender}` : ""; // format it so that if no gender is specified an image with any gender is found 
-    
-        // TODO: Why 1000?
-        const page = this.random.intMax(1000);
-    
-        const url = `https://api.generated.photos/api/frontend/v1/images?order_by=latest&page=${page}&per_page=1${genderURL}&age=${ageString}`;
+        const url = 
+            `https://api.generated.photos/api/frontend/v1/images?order_by=latest&page=${randomPage}&per_page=1&gender=${genderString}&age=${ageString}&ethnicity=${ethnicityString}`;
     
         const response = await fetch(url, {
             headers: [["Authorization", "API-Key Cph30qkLrdJDkjW-THCeyA"]]
         });
     
         const json = await response.json();
+
+        // Choose the first image
+        const image = json.images[0];
+
         const originalJson = JSON.parse(JSON.stringify(json)); // Remove the reference to the original object
         
-        const meta = json.images[0].meta;
-        const age = meta.age[0];
-        const hairColor = meta.hair_color[0];
-        const eyeColor = meta.eye_color[0];
-        const genderValue = meta.gender[0];
+        const age = image.meta.age[0];
+        const hairColor = image.meta.hair_color[0];
+        const eyeColor = image.meta.eye_color[0];
+        const genderValue = image.meta.gender[0];
     
         var ageRange = [];
         switch (age) {
@@ -181,24 +211,24 @@ class Person {
         }
     
         // Convert single-element arrays into a single variable
-        meta.gender = meta.gender[0];
-        meta.age = meta.age[0];
-        meta.ethnicity = meta.ethnicity[0];
-        meta.eye_color = meta.eye_color[0];
-        meta.hair_color = meta.hair_color[0];
-        meta.hair_length = meta.hair_length[0];
-        meta.emotion = meta.emotion[0];
+        image.meta.gender = image.meta.gender[0];
+        image.meta.age = image.meta.age[0];
+        image.meta.ethnicity = image.meta.ethnicity[0];
+        image.meta.eye_color = image.meta.eye_color[0];
+        image.meta.hair_color = image.meta.hair_color[0];
+        image.meta.hair_length = image.meta.hair_length[0];
+        image.meta.emotion = image.meta.emotion[0];
     
         // Add the custom variables
-        meta.ageRange = ageRange; 
-        meta.hairColorTranslated = hairColorTranslated; 
-        meta.eyeColorTranslated = eyeColorTranslated;
-        meta.genderTranslated = genderTranslated;
+        image.meta.ageRange = ageRange; 
+        image.meta.hairColorTranslated = hairColorTranslated; 
+        image.meta.eyeColorTranslated = eyeColorTranslated;
+        image.meta.genderTranslated = genderTranslated;
     
         return { 
             imageResponse: originalJson, 
-            image: json.images[0],
-            imageUrl: json.images[0].thumb_url
+            image: image,
+            imageUrl: image.thumb_url
         };
     };
 
