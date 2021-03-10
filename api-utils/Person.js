@@ -18,6 +18,15 @@ const surnames = require("../json/surnames.json");
 const personalityTraits = require("../json/personalityTraits.json");
 const diseases = require("../json/diseases.json");
 const organizations = require("../json/organizations.json");
+
+const GeneratedPhotosApiHeaders = { 
+    "Authorization": "API-Key Cph30qkLrdJDkjW-THCeyA",
+    'Content-Type': 'application/json',
+    "Host": "api.generated.photos",
+    "Origin": "https://generated.photos",
+    "Referer": "https://generated.photos/",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36"
+};
 class Person {
     constructor(seed) {
         this.seed = seed;
@@ -118,7 +127,8 @@ class Person {
             const url = 
                 `https://api.generated.photos/api/frontend/v1/filters?gender=${gender}&age=${age}&ethnicity=${ethnicity}`;
 
-            const response = await fetch(url, { headers: [["Authorization", "API-Key Cph30qkLrdJDkjW-THCeyA"]] });
+            const response = await fetch(url, { headers: GeneratedPhotosApiHeaders });
+
             const json = await response.json();
 
             const count = json.filters[2].values[0].count; 
@@ -189,9 +199,7 @@ class Person {
         const url = 
             `https://api.generated.photos/api/frontend/v1/images?order_by=latest&page=${randomPage}&per_page=1&gender=${gender}&age=${age}&ethnicity=${ethnicity}`;
     
-        const response = await fetch(url, {
-            headers: [["Authorization", "API-Key Cph30qkLrdJDkjW-THCeyA"]]
-        });
+        const response = await fetch(url, { headers: GeneratedPhotosApiHeaders });
     
         const json = await response.json();
 
